@@ -11,10 +11,10 @@ type Pagination struct {
 }
 
 type NodeInfo struct {
-	Id		string `json:"id"`
-	NodeId	string `json:"node-id"`
-	Host	string `json:"host"`
-	Port	string `json: "port"`
+	Id			string `json:"id"`
+	NodeId		string `json:"node-id"`
+	Host		string `json:"host"`
+	Port		string `json: "port"`
 	Username	string `json: "username"`
 	Passwd		string `json: "password"`
     Required	string `json: "is-required"`
