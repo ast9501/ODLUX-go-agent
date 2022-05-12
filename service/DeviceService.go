@@ -1,10 +1,10 @@
 package service
 
 import (
-	//"agent/model"
 	"log"
 	"net/http"
 	//"strconv"
+	. "agent/internal"
 
 	"github.com/gin-gonic/gin"
 )
@@ -39,6 +39,9 @@ func GetConnectDevice(c *gin.Context) {
         return
     }
 
+	onos := InitOnos()
+	log.Println("onos server info: ", onos.Ip, " ", onos.Port)
+	_ = onos.GetDevices()
 	log.Printf("%v \n", m)
 	c.JSON(http.StatusOK, "OK")
 }
