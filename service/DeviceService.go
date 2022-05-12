@@ -5,6 +5,7 @@ import (
 	"net/http"
 	//"strconv"
 	. "agent/internal"
+	. "agent/pkg"
 
 	"github.com/gin-gonic/gin"
 )
@@ -40,10 +41,10 @@ func GetConnectDevice(c *gin.Context) {
     }
 
 	onos := InitOnos()
-	log.Println("onos server info: ", onos.Ip, " ", onos.Port)
-	_ = onos.GetDevices()
-	log.Printf("%v \n", m)
-	c.JSON(http.StatusOK, "OK")
+	deviceList := onos.GetDevices()
+	response := ResponseBuilder(deviceList)
+
+	c.Data(http.StatusOK, "application/json", response)
 }
 
 func CreateDevice(c *gin.Context) {

@@ -2,12 +2,13 @@ package internal
 
 import (
 	"os"
-	. "agent/model"
+	//. "agent/model"
 	"net/http"
-	"encoding/json"
+	//"encoding/json"
 	"log"
 	"io/ioutil"
 	"time"
+	. "agent/pkg"
 )
 
 /*
@@ -23,12 +24,9 @@ type OnosServer struct {
 }
 
 
-func (s *OnosServer) GetDevices() []Device {
-	// Declare slice []Device
-	var devices []Device
+func (s *OnosServer) GetDevices() (deviceList interface{}) {
 
 	url := "http://" + s.Ip + ":" + s.Port +"/onos/v1/network/configuration"
-	log.Println("Request url: ", url)
 
 	// TODO: Decouple function: Raise request
 	client := &http.Client{
@@ -49,38 +47,13 @@ func (s *OnosServer) GetDevices() []Device {
 
 	data, err := ioutil.ReadAll(res.Body)
 
-	// TODO: Parse JSON body
 	if err != nil {
 		log.Println(err)
-		return devices
+		return
 	}
+	deviceList = ParsOnosResponse(data, "GetDevice")
 
-	var resBody OnosGetDeviceRes
-	// Parsing json with non-static field
-	var deviceList interface{}
-	json.Unmarshal(data, &resBody)
-
-	// Extract devices field to parse indivisual devices info
-	json.Unmarshal(resBody.Devices, &deviceList)
-	//log.Println(deviceList)
-	m := deviceList.(map[string]interface{})
-	for k, v := range m {
-		switch vv := v.(type) {
-		case string:
-			log.Println(k, " is string ", vv)
-		case map[string]interface{}:
-			//log.Println(k, " is map[string]interface{} ", vv)
-			log.Println("Device: ", k)
-			netconfs := vv["netconf"].(map[string]interface{})
-			log.Println("ip: ", netconfs["ip"])
-			log.Println("port: ", netconfs["port"])
-		default:
-			log.Println("Unknown type")
-		}
-	}
-
-	// TODO: Append into devices then return 
-	return devices
+	return 
 }
 
 func InitOnos() *OnosServer {
