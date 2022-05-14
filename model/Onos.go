@@ -13,3 +13,9 @@ type OnosDevice struct {
 	Port	string
 	Status	string
 }
+
+func (d *OnosDevice) GenerateReq(passwd string) (req []byte){
+	payload := "{\"devices\": {\"netconf:" + d.Ip + ":" + d.Port + "\": {\"netconf\": {\"ip\":\"" + d.Ip + "\", \"port\":" + d.Port + ", \"username\": \"" + d.Name + "\", \"password\": \"" + passwd + "\" }, \"basic\": { \"driver\": \"ovs-netconf\"} } } }"
+	req = []byte(payload)
+	return
+}

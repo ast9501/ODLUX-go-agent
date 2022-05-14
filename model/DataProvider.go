@@ -30,7 +30,7 @@ type NodeInfo struct {
 }
 
 type DataProviderInput struct {
-	Data	NodeInfo `json:"data-provider:input"`
+	Data	NodeInfo 	`json:"data-provider:input"`
 }
 
 type DataProviderOutput struct {

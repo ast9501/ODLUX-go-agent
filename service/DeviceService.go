@@ -48,12 +48,21 @@ func GetConnectDevice(c *gin.Context) {
 }
 
 func CreateDevice(c *gin.Context) {
-	var m map[string]interface{}
-    err := c.Bind(&m)
-    if err != nil {
+	//var m map[string]interface{}
+	m := NewDevReq{}
+    err := c.BindJSON(&m)
+	if err != nil {
+		log.Println(err)
         return
     }
+	deviceInfo, devicePasswd := m.Parser()
 
-	log.Printf("%v \n", m)
-	c.JSON(http.StatusOK, "OK")
+	onos := InitOnos()
+	status := onos.CreateDevice(deviceInfo, devicePasswd)
+	if (status) {
+		c.JSON(http.StatusOK, "OK")	
+		//log.Println("(ONOS) create device ", deviceInfo, " success!")
+	} else {
+		c.JSON(http.StatusInternalServerError, "Error: Please check your ONOS connection or verfiy your device info is correct")
+	}
 }
