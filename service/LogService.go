@@ -43,12 +43,5 @@ func PostDeviceLog(c *gin.Context) {
 }
 
 func GetStatus(c *gin.Context) {
-	var m map[string]interface{}
-    err := c.Bind(&m)
-    if err != nil {
-        return
-    }
-
-	log.Printf("%v \n", m)
 	c.JSON(http.StatusOK, "OK")
 }
