@@ -43,5 +43,5 @@ func PostDeviceLog(c *gin.Context) {
 }
 
 func GetStatus(c *gin.Context) {
-	c.JSON(http.StatusOK, "OK")
+	c.JSON(http.StatusOK, "Service is OK")
 }
