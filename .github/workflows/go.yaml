@@ -68,6 +68,4 @@ jobs:
           git config --local user.name "github action"
       - name: Merge to main branch to trigger CD workflow
         run: |
-          git fetch
-          git checkout main
           git merge --no-ff dev -m "Auto-merge dev to main"
