@@ -1,20 +1,20 @@
 name: Deploy to cluster
 on:
-  #workflow_run:
-  #  workflows: ["golang CI workflow"]
-  #  branches: [dev]
-  #  types: 
-  #    - completed
-  workflow_dispatch:
-    inputs:
-      comitterName:
-        description: 'Commit author'     
-        required: true
-        #default: 'Repo owner'
-      comitterMail:
-        description: 'Commit author email'     
-        required: true
-        #default: 'Repo owner'
+  workflow_run:
+    workflows: ["golang CI workflow"]
+    branches: [dev]
+    types: 
+      - completed
+  #workflow_dispatch:
+  #  inputs:
+  #    comitterName:
+  #      description: 'Commit author'     
+  #      required: true
+  #      #default: 'Repo owner'
+  #    comitterMail:
+  #      description: 'Commit author email'     
+  #      required: true
+  #      #default: 'Repo owner'
 jobs:
   merge-to-main:
     runs-on: ubuntu-latest
@@ -23,8 +23,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Set Git config
         run: |
-          git config --local user.email ${{ github.event.inputs.comitterMail }}
-          git config --local user.name ${{ github.event.inputs.comitterName }}
+          git config --local user.email "git@github.com"
+          git config --local user.name "github action"
       - name: Merge to main branch to trigger CD workflow
         run: |
           git checkout main
