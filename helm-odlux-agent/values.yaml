@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: alan0415/odlux-agent
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v0.1"
 
